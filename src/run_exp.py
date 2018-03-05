@@ -135,7 +135,7 @@ if __name__ == "__main__":
                         help="DataProvider Sampler Filename")
     parser.add_argument("model_fname",
                         help="Model Template Filename")
-    parser.add_argument("--batch_sz",  type=int, default=1,
+    parser.add_argument("--batch_sz",  type=int, default=4,
                         help="Batch size for each sample")
     parser.add_argument("--chkpt_num", type=int, default=0,
                         help="Checkpoint Number")
