@@ -242,7 +242,7 @@ class Model(nn.Module):
   def add_max_pool(self, depth, D_in, down=(1,2,2)):
     
     setattr(self, "maxpool{}".format(depth),
-            nn.MaxPool2d(down))
+            nn.MaxPool3d(down))
 
 
   def add_deconv_mod(self, depth, D_in, D_out, bn, up=(1,2,2)):
