@@ -22,7 +22,7 @@ def read_file(fname):
 
 class Sampler(object):
 
-    def __init__(self, datadir, dsets=[], mode="train", patchsz=(1,512,512), resize=1):
+    def __init__(self, datadir, dsets=[], mode="train", patchsz=(1,256,256), resize=1):
 
       assert mode in ["train","val","test"]
 
