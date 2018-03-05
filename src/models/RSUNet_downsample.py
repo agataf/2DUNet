@@ -30,11 +30,11 @@ nfeatures = [28,36,48,64,80,96]
 
 # Filter size
 sizes = [(1,3,3),
-         (3,3,3),
-         (3,3,3),
-         (3,3,3),
-         (3,3,3),
-         (3,3,3)]
+         (1,3,3),
+         (1,3,3),
+         (1,3,3),
+         (1,3,3),
+         (1,3,3)]
 
 # In/out filter & stride size
 io_size   = (1,5,5)
@@ -64,9 +64,9 @@ class ConvMod(nn.Module):
     self.conv3 = conv_constr(D_out, D_out, ks, st, pd, bias)
 
     if self.bn:
-      self.bn1 = nn.BatchNorm3d(D_out, momentum=momentum)
-      self.bn2 = nn.BatchNorm3d(D_out, momentum=momentum)
-      self.bn3 = nn.BatchNorm3d(D_out, momentum=momentum)
+      self.bn1 = nn.BatchNorm2d(D_out, momentum=momentum)
+      self.bn2 = nn.BatchNorm2d(D_out, momentum=momentum)
+      self.bn3 = nn.BatchNorm2d(D_out, momentum=momentum)
     
 
   def forward(self, x):
@@ -95,7 +95,7 @@ class ConvMod(nn.Module):
 class ConvTMod(nn.Module):
   """ Transposed Convolution "module" """
 
-  def __init__(self, D_in, D_out, ks, up=(1,2,2), activation=F.elu,
+  def __init__(self, D_in, D_out, ks, up=(1,4,4), activation=F.elu,
                fact=factorize, resid=residual, 
                bn=True, momentum=0.999):
 
@@ -109,7 +109,7 @@ class ConvTMod(nn.Module):
 
     self.convt = convt_constr(D_in, D_out, ks=up, st=up, bias=bias)
     if bn:
-      self.bn1 = nn.BatchNorm3d(D_out, momentum=momentum)
+      self.bn1 = nn.BatchNorm2d(D_out, momentum=momentum)
 
     self.convmod = ConvMod(D_out, D_out, ks, fact=fact, resid=resid, bn=bn)
 
@@ -177,7 +177,7 @@ class Model(nn.Module):
     # in most pytorch docs. I'll follow that convention here
 
     # Downsample input
-    self.add_downsample_mod(scale_factor=(1,2,2), mode='trilinear')     
+    self.add_downsample_mod(scale_factor=(1,4,4), mode='biilinear')     
         
     # Input feature embedding without batchnorm
     fs = nfeatures[0]
@@ -219,17 +219,17 @@ class Model(nn.Module):
     self.outputdeconv = OutputModule(D_in, output_spec, ks=io_size, st=io_stride)
     print("type of self.outputdeconv", type(self.outputdeconv))
          
-    self.add_upsample_mod(scale_factor=(1,2,2), mode='trilinear')
+    self.add_upsample_mod(scale_factor=(1,4,4), mode='biilinear')
 
     #m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
     #self.outputdeconv = m(self.outputdeconv)
     # TODO: insert upsampling here      
          
-  def add_downsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
+  def add_downsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "downsample",
-            nn.AvgPool3d((1,2,2)))  
+            nn.AvgPool3d(scale_factor))  
 
-  def add_upsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
+  def add_upsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "upsample",
             nn.Upsample(scale_factor=scale_factor, mode=mode))      
 
