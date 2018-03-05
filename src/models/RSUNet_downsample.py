@@ -64,9 +64,9 @@ class ConvMod(nn.Module):
     self.conv3 = conv_constr(D_out, D_out, ks, st, pd, bias)
 
     if self.bn:
-      self.bn1 = nn.BatchNorm2d(D_out, momentum=momentum)
-      self.bn2 = nn.BatchNorm2d(D_out, momentum=momentum)
-      self.bn3 = nn.BatchNorm2d(D_out, momentum=momentum)
+      self.bn1 = nn.BatchNorm3d(D_out, momentum=momentum)
+      self.bn2 = nn.BatchNorm3d(D_out, momentum=momentum)
+      self.bn3 = nn.BatchNorm3d(D_out, momentum=momentum)
     
 
   def forward(self, x):
@@ -109,7 +109,7 @@ class ConvTMod(nn.Module):
 
     self.convt = convt_constr(D_in, D_out, ks=up, st=up, bias=bias)
     if bn:
-      self.bn1 = nn.BatchNorm2d(D_out, momentum=momentum)
+      self.bn1 = nn.BatchNorm3d(D_out, momentum=momentum)
 
     self.convmod = ConvMod(D_out, D_out, ks, fact=fact, resid=resid, bn=bn)
 
@@ -227,7 +227,7 @@ class Model(nn.Module):
          
   def add_downsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "downsample",
-            nn.AvgPool2d(scale_factor))  
+            nn.AvgPool3d(scale_factor))  
 
   def add_upsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "upsample",
