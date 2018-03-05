@@ -22,7 +22,7 @@ def read_file(fname):
 
 class Sampler(object):
 
-    def __init__(self, datadir, dsets=[], mode="train", patchsz=(16,320,320), resize=1):
+    def __init__(self, datadir, dsets=[], mode="train", patchsz=(1,256,256), resize=1):
 
       assert mode in ["train","val","test"]
 
@@ -44,10 +44,10 @@ class Sampler(object):
 
       for dset in dsets:
         vdp.add_dataset( self.build_dataset(datadir, spec, dset, resize) )
-      if mode == "train":
-          vdp.set_sampling_weights([0.5, 0.1, 0.025, 0.1, 0.1, 0.025, 0.025, 0.025, 0.1])
-      if mode == "val":
-          vdp.set_sampling_weights([0.5, 0.15, 0.05, 0.1, 0.1])
+     # if mode == "train":
+          #vdp.set_sampling_weights([0.5, 0.1, 0.025, 0.1, 0.1, 0.025, 0.025, 0.025, 0.1])
+     # if mode == "val":
+          #vdp.set_sampling_weights([0.5, 0.15, 0.05, 0.1, 0.1])
       vdp.set_augmentor(self._aug(mode))
       vdp.set_postprocessor(self._post())
 
@@ -58,7 +58,7 @@ class Sampler(object):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
-      psd = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
+      psd = read_file(os.path.join(datadir, dset_name + "_blood.h5")).astype("float32")
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
