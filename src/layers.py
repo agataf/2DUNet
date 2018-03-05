@@ -79,7 +79,7 @@ class ConvT(nn.Module):
   def __init__(self, D_in, D_out, ks, st, pd=(0,0,0), bias=True):
 
     nn.Module.__init__(self)
-    self.conv = nn.ConvTranspose2d(D_in, D_out, ks, st, pd, bias=bias)
+    self.conv = nn.ConvTranspose3d(D_in, D_out, ks, st, pd, bias=bias)
     init.kaiming_normal(self.conv.weight)
     if bias:
       init.constant(self.conv.bias, 0)
