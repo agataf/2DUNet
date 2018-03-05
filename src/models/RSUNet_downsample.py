@@ -227,7 +227,7 @@ class Model(nn.Module):
          
   def add_downsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "downsample",
-            nn.AvgPool3d(scale_factor))  
+            nn.AvgPool2d(scale_factor))  
 
   def add_upsample_mod(self, scale_factor=(1,4,4), mode='biilinear'):
     setattr(self, "upsample",
@@ -242,7 +242,7 @@ class Model(nn.Module):
   def add_max_pool(self, depth, D_in, down=(1,2,2)):
     
     setattr(self, "maxpool{}".format(depth),
-            nn.MaxPool3d(down))
+            nn.MaxPool2d(down))
 
 
   def add_deconv_mod(self, depth, D_in, D_out, bn, up=(1,2,2)):
