@@ -177,7 +177,7 @@ class Model(nn.Module):
     # in most pytorch docs. I'll follow that convention here
 
     # Downsample input
-    self.add_downsample_mod(scale_factor=(1,2,2), mode='bilinear')     
+    #self.add_downsample_mod(scale_factor=(1,2,2), mode='bilinear')     
         
     # Input feature embedding without batchnorm
     fs = nfeatures[0]
@@ -219,7 +219,7 @@ class Model(nn.Module):
     self.outputdeconv = OutputModule(D_in, output_spec, ks=io_size, st=io_stride)
     print("type of self.outputdeconv", type(self.outputdeconv))
          
-    self.add_upsample_mod(scale_factor=(1,2,2), mode='bilinear')
+    #self.add_upsample_mod(scale_factor=(1,2,2), mode='bilinear')
 
     #m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
     #self.outputdeconv = m(self.outputdeconv)
