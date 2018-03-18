@@ -67,9 +67,9 @@ def fill_params(expt_name, chkpt_num, gpus,
                             "~/seungmount/research/agataf/datasets/pinky_all")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
     params["dsets"]       = dset_names
-    params["input_spec"]  = collections.OrderedDict(input=(1,256, 256)) #dp dataset spec
-    params["scan_spec"]   = collections.OrderedDict(psd=(1,256, 256))
-    params["scan_params"] = dict(stride=(0.5,0.5), blend="bump")
+    params["input_spec"]  = collections.OrderedDict(input=(1,256,256)) #dp dataset spec
+    params["scan_spec"]   = collections.OrderedDict(psd=(1,1,256,256))
+    params["scan_params"] = dict(stride=(1,0.5,0.5), blend="bump")
 
     #Use-specific Module imports
     params["model_class"]  = imp.load_source("Model", model_fname).Model
