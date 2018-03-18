@@ -57,6 +57,8 @@ class Sampler(object):
     def build_dataset(self, datadir, spec, dset_name, resize):
 
       print(dset_name)
+      print("img path", os.path.join(datadir, dset_name + "_resized4_img.h5"))
+      print("blood path", os.path.join(datadir, dset_name + "_resized4_blood.h5"))
       img = read_file(os.path.join(datadir, dset_name + "_resized4_img.h5"))
       psd = read_file(os.path.join(datadir, dset_name + "_resized4_blood.h5")).astype("float32")
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
