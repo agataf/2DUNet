@@ -86,7 +86,7 @@ class Sampler(object):
       #aug.append('missing', max_sec=5, mode='mix',random_color=True)
       #aug.append('blur', max_sec=5, mode='mix')
       if mode == "train":
-        aug.append('warp')
+        #aug.append('warp')
         aug.append('greyscale', mode='mix')
         aug.append('flip')
       return aug
